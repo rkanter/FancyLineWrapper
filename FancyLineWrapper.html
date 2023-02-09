@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fancy Line Wrapper</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="jquery-3.6.3.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $("#inputTextArea").on("input", function() {
+            var output = "";
+            var lines = $(this).val().split('\n')
+            lines.forEach(function(nextLine) {
+                var currentOutputLine = ""
+                var listIndentLevel = determineListIndentLevel(nextLine);
+                if (listIndentLevel > 1) {
+                    currentOutputLine += " ".repeat(listIndentLevel - 2);
+                }
+                var words = nextLine.trim().split(/\s+/);
+                words.forEach(function(nextWord) {
+                    if (currentOutputLine.length + nextWord.length > 80) {
+                        currentOutputLine = removeLastCharIfNeeded(currentOutputLine)
+                        output += currentOutputLine + '\n';
+                        currentOutputLine = "";
+                        if (listIndentLevel > 0) {
+                            currentOutputLine += " ".repeat(listIndentLevel);
+                        }
+                    }
+                    currentOutputLine += nextWord + ' ';
+                })
+                currentOutputLine = removeLastCharIfNeeded(currentOutputLine)
+                output += currentOutputLine + '\n';
+            })
+            output = removeLastCharIfNeeded(output)
+            $("#outputTextArea").val(output)
+        });
+    });
+    function removeLastCharIfNeeded(str) {
+      if (str.length > 1) {
+        return str.substr(0, str.length - 1);
+      }
+      return str;
+    }
+    function determineListIndentLevel(line) {
+        const indentLevelPattern = /^( *)\- .*/
+        var match = line.match(indentLevelPattern);
+        if (match != null) {
+            return match[1].length + 2;
+        }
+        return -1;
+    }
+    </script>
+</head>
+<body>
+<h1>Fancy Line Wrapper</h1>
+<textarea id="inputTextArea" class="inputTextArea" placeholder="Enter text here" cols="80" rows="15" autofocus></textarea>
+<textarea id="outputTextArea" class="outputTextArea" placeholder="Get text here" cols="80" rows="15" readonly></textarea>
+</body>
+</html>
