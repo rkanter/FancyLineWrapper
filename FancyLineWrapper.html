@@ -7,6 +7,9 @@
     <script src="jquery-3.6.3.min.js"></script>
     <script>
     $(document).ready(function() {
+        $('button').on('click', () => {
+          navigator.clipboard.writeText($("#outputTextArea").val());
+        });
         $("#inputTextArea").on("input", function() {
             var output = "";
             var lines = $(this).val().split('\n')
@@ -54,6 +57,16 @@
 <body>
 <h1>Fancy Line Wrapper</h1>
 <textarea id="inputTextArea" class="inputTextArea" placeholder="Enter text here" cols="80" rows="15" autofocus></textarea>
-<textarea id="outputTextArea" class="outputTextArea" placeholder="Get text here" cols="80" rows="15" readonly></textarea>
+<form>
+    <textarea id="outputTextArea" class="outputTextArea" placeholder="Get text here" cols="80" rows="15" readonly></textarea>
+    <button id="copyOutputButton" class="copyOutputButton">Copy</button>
+</form>
 </body>
 </html>
+<!--
+TODO
+- when you copy-paste normally it's fine; but when you use the button, it clears the input textarea
+- replace "copy" text with copy icon?
+- icon for window
+- cleanup: rename functions and vars, reorganize code, etc
+-->

@@ -1,6 +1,19 @@
+form {
+  /* This, along with putting them in a <form>, makes the copyOutputButton the same height as the outputTextArea */
+	display: flex;
+}
+
 .inputTextArea {
   background: #fff6de;
+  margin-bottom: 20px;
 }
+
 .outputTextArea {
   resize: vertical;
+}
+
+.copyOutputButton {
+  font-size: 16px;
+  width: 200px;
+  margin-left: 20px;
 }
