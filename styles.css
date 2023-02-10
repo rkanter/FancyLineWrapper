@@ -1,19 +1,36 @@
+body {
+  background: #333;
+  color: #E5E5CB;
+  font-family: Helvetica;
+}
+
 form {
   /* This, along with putting them in a <form>, makes the copyOutputButton the same height as the outputTextArea */
 	display: flex;
 }
 
+::placeholder {
+  color: #E5E5CB;
+  opacity: 0.3;
+}
+
 .inputTextArea {
-  background: #fff6de;
+  background: #735F32;
+  color: #E5E5CB;
   margin-bottom: 20px;
 }
 
 .outputTextArea {
+  background: #2C3333;
+  color: #E5E5CB;
   resize: vertical;
 }
 
 .copyOutputButton {
-  font-size: 16px;
+  background: #395B64;
+  color: #E5E5CB;
+  font-family: Helvetica;
+  font-size: 40px;
   width: 200px;
   margin-left: 20px;
 }
