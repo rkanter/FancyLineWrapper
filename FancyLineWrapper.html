@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Fancy Line Wrapper</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css"/>
+    <!-- Icon from https://icons8.com/icon/q-7YCXE1jTFn/word-wrap with -->
+    <!-- background=#395B64 (copyOutputButton background) and color=#333 (body background) -->
+    <link rel="icon" type="image/x-icon" href="icons8-word-wrap-96.png">
     <script src="jquery-3.6.3.min.js"></script>
     <script>
     $(document).ready(function() {
@@ -71,6 +74,7 @@
 <form id="outputForm" class="outputForm">
     <textarea id="outputTextArea" class="outputTextArea" placeholder="Get text here" cols="80" rows="15" readonly></textarea>
     <button id="copyOutputButton" class="copyOutputButton">
+        <!-- Icon from https://clipground.com/images/copy-4.png -->
         <img src="copy-4.png" title="Click to Copy" class="copyOutputButtonImage">
     </button>
 </form>
@@ -78,6 +82,5 @@
 </html>
 <!--
 TODO
-- icon for window
 - cleanup: rename functions and vars, reorganize code, etc
 -->
