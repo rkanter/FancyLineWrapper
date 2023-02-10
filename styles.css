@@ -4,7 +4,7 @@ body {
   font-family: Helvetica;
 }
 
-form {
+.outputForm {
   /* This, along with putting them in a <form>, makes the copyOutputButton the same height as the outputTextArea */
 	display: flex;
 }

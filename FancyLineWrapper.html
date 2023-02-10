@@ -7,37 +7,47 @@
     <script src="jquery-3.6.3.min.js"></script>
     <script>
     $(document).ready(function() {
+        <!-- Loads previous data on refresh -->
+        if (localStorage["inputTextAreaData"]) {
+            $("#inputTextArea").val(window.localStorage["inputTextAreaData"]);
+            syncOutputTextArea()
+        }
+        <!-- Copies text to clipboard; this also clears the textareas, but that's okay because the above -->
+        <!-- localstorage handles repopulating it -->
         $('button').on('click', () => {
           navigator.clipboard.writeText($("#outputTextArea").val());
         });
-        $("#inputTextArea").on("input", function() {
-            var output = "";
-            var lines = $(this).val().split('\n')
-            lines.forEach(function(nextLine) {
-                var currentOutputLine = ""
-                var listIndentLevel = determineListIndentLevel(nextLine);
-                if (listIndentLevel > 1) {
-                    currentOutputLine += " ".repeat(listIndentLevel - 2);
-                }
-                var words = nextLine.trim().split(/\s+/);
-                words.forEach(function(nextWord) {
-                    if (currentOutputLine.length + nextWord.length > 80) {
-                        currentOutputLine = removeLastCharIfNeeded(currentOutputLine)
-                        output += currentOutputLine + '\n';
-                        currentOutputLine = "";
-                        if (listIndentLevel > 0) {
-                            currentOutputLine += " ".repeat(listIndentLevel);
-                        }
-                    }
-                    currentOutputLine += nextWord + ' ';
-                })
-                currentOutputLine = removeLastCharIfNeeded(currentOutputLine)
-                output += currentOutputLine + '\n';
-            })
-            output = removeLastCharIfNeeded(output)
-            $("#outputTextArea").val(output)
-        });
+        <!-- When the user types or pastes something into the inputTextArea, sync it to the outputTextArea -->
+        $("#inputTextArea").on("input", () => syncOutputTextArea());
     });
+    function syncOutputTextArea() {
+        localStorage["inputTextAreaData"] = $("#inputTextArea").val();
+        var output = "";
+        var lines = $("#inputTextArea").val().split('\n')
+        lines.forEach(function(nextLine) {
+            var currentOutputLine = ""
+            var listIndentLevel = determineListIndentLevel(nextLine);
+            if (listIndentLevel > 1) {
+                currentOutputLine += " ".repeat(listIndentLevel - 2);
+            }
+            var words = nextLine.trim().split(/\s+/);
+            words.forEach(function(nextWord) {
+                if (currentOutputLine.length + nextWord.length > 80) {
+                    currentOutputLine = removeLastCharIfNeeded(currentOutputLine)
+                    output += currentOutputLine + '\n';
+                    currentOutputLine = "";
+                    if (listIndentLevel > 0) {
+                        currentOutputLine += " ".repeat(listIndentLevel);
+                    }
+                }
+                currentOutputLine += nextWord + ' ';
+            })
+            currentOutputLine = removeLastCharIfNeeded(currentOutputLine)
+            output += currentOutputLine + '\n';
+        })
+        output = removeLastCharIfNeeded(output);
+        $("#outputTextArea").val(output);
+    }
     function removeLastCharIfNeeded(str) {
       if (str.length > 1) {
         return str.substr(0, str.length - 1);
@@ -57,7 +67,8 @@
 <body>
 <h1>Fancy Line Wrapper</h1>
 <textarea id="inputTextArea" class="inputTextArea" placeholder="Enter text here" cols="80" rows="15" autofocus></textarea>
-<form>
+<!-- We put these in a form to help align the copyOutputButton with the outputTextArea -->
+<form id="outputForm" class="outputForm">
     <textarea id="outputTextArea" class="outputTextArea" placeholder="Get text here" cols="80" rows="15" readonly></textarea>
     <button id="copyOutputButton" class="copyOutputButton">Copy</button>
 </form>
@@ -65,7 +76,6 @@
 </html>
 <!--
 TODO
-- when you copy-paste normally it's fine; but when you use the button, it clears the input textarea
 - replace "copy" text with copy icon?
 - icon for window
 - cleanup: rename functions and vars, reorganize code, etc
