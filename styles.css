@@ -29,8 +29,11 @@ body {
 .copyOutputButton {
   background: #395B64;
   color: #E5E5CB;
-  font-family: Helvetica;
-  font-size: 40px;
-  width: 200px;
+  width: 250px;
   margin-left: 20px;
+}
+
+.copyOutputButtonImage{
+  width: 60%;
+  object-fit: contain;
 }
