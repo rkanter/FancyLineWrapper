@@ -4,7 +4,7 @@ A simple webpage that helps me format git commit messages the way I like and to 
 1. [Overview](#overview)
 1. [Useful Tips](#useful-tips-)
 
-[Go to Fancy Line Wrapper here](FancyLineWrapper.html)
+[Go to Fancy Line Wrapper here](FancyLineWrapper.html) or [the GitHub Pages hosted one here](https://rkanter.github.io/FancyLineWrapper/FancyLineWrapper.html).
 
 ### Overview
 Enter text into the upper text box however you want, and the lower text box will automatically re-format it on-the-fly
