@@ -1,6 +1,11 @@
 # Fancy Line Wrapper
 A simple webpage that helps me format git commit messages the way I like and to match external requirements.
 
+1. [Overview](#overview)
+1. [Useful Tips](#useful-tips-)
+
+[Go to Fancy Line Wrapper here](FancyLineWrapper.html)
+
 ### Overview
 Enter text into the upper text box however you want, and the lower text box will automatically re-format it on-the-fly
 according to the following rules:
@@ -13,7 +18,7 @@ Here's an example to better illustrate things:
 
 ![screenshot.png](screenshot.png)
 
-### Useful tips:
+### Useful Tips:
 - The resulting text can either be copy-pasted from the lower text box the usual way, or by clicking the giant copy
 button.
 - The upper text box can be resized freely, while the lower text box can only be resized down.
