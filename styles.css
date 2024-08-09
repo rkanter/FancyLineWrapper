@@ -36,3 +36,16 @@ body {
   width: 60%;
   object-fit: contain;
 }
+
+a:link {
+  color: #395B64;
+}
+a:visited {
+  color: #395B64;
+}
+a:hover {
+  color: #395B64;
+}
+a:active {
+  color: #395B64;
+}
