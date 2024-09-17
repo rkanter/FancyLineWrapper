@@ -13,18 +13,41 @@
         <!-- Loads previous data on refresh -->
         if (localStorage["inputTextAreaData"]) {
             $("#inputTextArea").val(window.localStorage["inputTextAreaData"]);
-            syncOutputTextArea()
         }
+        if (localStorage["lineLength"]) {
+            $("#lineLengthField").val(window.localStorage["lineLength"]);
+        }
+        syncOutputTextArea()
+
         <!-- Copies text to clipboard; this also clears the textareas, but that's okay because the above -->
         <!-- localstorage handles repopulating it -->
-        $('button').on('click', () => {
+        $('#copyOutputButton').on('click', () => {
           navigator.clipboard.writeText($("#outputTextArea").val());
         });
+
         <!-- When the user types or pastes something into the inputTextArea, sync it to the outputTextArea -->
         $("#inputTextArea").on("input", () => syncOutputTextArea());
+
+        <!-- Show the settings modal when the settings button is clicked -->
+        $('#settingsButton').on('click', () => {
+            $("#settingsModal").show();
+        });
+
+        <!-- Hide the settings modal when the close button is clicked -->
+        $('#settingsCloseButton').on('click', () => {
+            $("#settingsModal").hide();
+        });
+
+        <!-- When the user types or pastes something into the lineLengthField, sync the line length and update -->
+        $("#lineLengthField").on("input", () => {
+            localStorage["lineLength"] = $("#lineLengthField").val();
+            syncOutputTextArea()
+        });
     });
     function syncOutputTextArea() {
         localStorage["inputTextAreaData"] = $("#inputTextArea").val();
+        var lineLength = getLineLength();
+        console.log(lineLength);
         var output = "";
         var lines = $("#inputTextArea").val().split('\n')
         lines.forEach(function(nextLine) {
@@ -35,7 +58,7 @@
             }
             var words = nextLine.trim().split(/\s+/);
             words.forEach(function(nextWord) {
-                if (currentOutputLine.length + nextWord.length > 80) {
+                if (currentOutputLine.length + nextWord.length > lineLength) {
                     currentOutputLine = removeLastCharIfNeeded(currentOutputLine)
                     output += currentOutputLine + '\n';
                     currentOutputLine = "";
@@ -50,6 +73,9 @@
         })
         output = removeLastCharIfNeeded(output);
         $("#outputTextArea").val(output);
+        <!-- Set the line length of the text areas -->
+        $("#inputTextArea").attr('cols', lineLength);
+        $("#outputTextArea").attr('cols', lineLength);
     }
     function removeLastCharIfNeeded(str) {
       if (str.length > 1) {
@@ -65,6 +91,13 @@
         }
         return -1;
     }
+    function getLineLength() {
+        var lineLength = localStorage["lineLength"];
+        if (lineLength === undefined) {
+            lineLength = 80;
+        }
+        return lineLength;
+    }
     </script>
 </head>
 <body>
@@ -78,6 +111,19 @@
         <img src="copy-4.png" title="Click to Copy" class="copyOutputButtonImage">
     </button>
 </form>
+</br>
+<button id="settingsButton" class="settingsButton">Settings</button>
+<!-- The Modal -->
+<div id="settingsModal" class="settingsModal">
+    <!-- Modal content -->
+    <div class="settingsModalContent">
+        <span id="settingsCloseButton" class="settingsCloseButton">&times;</span>
+        <p><h3>Settings</h3>
+        <label for="lineLengthField">Line Length:</label>
+        <input id="lineLengthField" type="number" class="inputTextArea" value="80">
+    </div>
+</div>
+</br>
 </br>
 <a href="../FancyLineWrapper" target="_blank">README</a>
 </body>
