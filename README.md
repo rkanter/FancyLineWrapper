@@ -13,6 +13,7 @@ according to the following rules:
 1. Lines beginning with a `-` are properly indented as a bulleted list, including wrapping the line with deeper
 indenting so it matches nicely.
 1. Bulleted lists also support nesting, including wrapping; just use spaces to indent the `-`.
+1. "Fancy" quotes are replaced with plain ones (`“foo”` –> `"foo"`)
 
 Here's an example to better illustrate things:
 

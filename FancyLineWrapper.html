@@ -51,6 +51,7 @@
         var output = "";
         var lines = $("#inputTextArea").val().split('\n')
         lines.forEach(function(nextLine) {
+            nextLine = cleanLine(nextLine);
             var currentOutputLine = ""
             var listIndentLevel = determineListIndentLevel(nextLine);
             if (listIndentLevel > 1) {
@@ -82,6 +83,12 @@
         return str.substr(0, str.length - 1);
       }
       return str;
+    }
+    function cleanLine(line) {
+        // Replace "fancy" quotes with plain ones
+        line = line.replaceAll("“", "\"");
+        line = line.replaceAll("”", "\"");
+        return line;
     }
     function determineListIndentLevel(line) {
         const indentLevelPattern = /^( *)\- .*/
